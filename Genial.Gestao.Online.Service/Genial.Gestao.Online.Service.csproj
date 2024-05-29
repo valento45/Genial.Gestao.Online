@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Genial.Gestao.Online.Domain\Genial.Gestao.Online.Domain.csproj" />
+    <ProjectReference Include="..\Genial.Gestao.Online.Repository\Genial.Gestao.Online.Repository.csproj" />
+    <ProjectReference Include="..\Genial.Gestao.Online.Securitys\Genial.Gestao.Online.Securitys.csproj" />
+  </ItemGroup>
+
 </Project>
