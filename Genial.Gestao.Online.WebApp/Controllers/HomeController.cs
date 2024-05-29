@@ -18,6 +18,11 @@ namespace Genial.Gestao.Online.WebApp.Controllers
             return View();
         }
 
+        public async Task<IActionResult> Login()
+        {
+            return View();  
+        }
+
         public IActionResult Privacy()
         {
             return View();
