@@ -1,0 +1,66 @@
+﻿@using Genial.Gestao.Online.Domain.Models;
+@model CadastroUsuarioViewModel
+
+@{
+    Layout = "_Layout";
+}
+
+<div class="container mt-5">
+
+    <h3>Cadastro de usuário</h3>
+    <hr />
+
+    <form class="col-lg-12 mt-5" asp-controller="Usuario" asp-action="Cadastrar" method="post" enctype="multipart/form-data">
+
+        @if (!Model.OperationSucess)
+        {
+            <div class="col-lg-12 p-2" style="background-color: beige; text-align-last: center;">
+                <h4 class="text-warning mt-3">@Model?.Message</h4>
+            </div>
+        }
+
+        <div class="col-lg-12">
+            <input asp-for="DadosUsuario.IdUsuario" type="hidden" />
+
+            <div class="form-outline mb-5 ag-field-content col-lg-7">
+                <input asp-for="DadosUsuario.Nome" type="text" class="form-control ag-field-input ag-input-color-orange-full" autocomplete="off" required>
+                <label class="form-label ag-field-label">Nome*</label>
+            </div>
+
+            <div class="form-outline mb-5 ag-field-content col-lg-7">
+                <input asp-for="DadosUsuario.Email" type="text" class="form-control ag-field-input ag-input-color-orange-full" autocomplete="off">
+                <label class="form-label ag-field-label">Email</label>
+            </div>
+
+            <div class="form-outline mb-5 ag-field-content col-lg-4">
+                <input asp-for="DadosUsuario.Celular" type="text" class="form-control ag-field-input ag-input-color-orange-full celular" autocomplete="off" required>
+                <label class="form-label ag-field-label">Celular*</label>
+            </div>
+
+
+            <div class="form-outline mb-5 ag-field-content col-lg-4 pnl-input-user">
+                <span class="icon-user">
+                    <svg b-q6dmfutj60="" id="minha_conta" data-name="minha conta" xmlns="http://www.w3.org/2000/svg" width="21.151" height="21.802" viewBox="0 0 21.151 21.802" fill="rgb(255,255,255)"><path b-q6dmfutj60="" id="Caminho_13" data-name="Caminho 13" d="M-87.758,67.873a6.32,6.32,0,0,0,6.32-6.319,6.32,6.32,0,0,0-6.32-6.32,6.32,6.32,0,0,0-6.319,6.32A6.32,6.32,0,0,0-87.758,67.873Zm0-11.225a4.912,4.912,0,0,1,4.906,4.906,4.912,4.912,0,0,1-4.906,4.9,4.911,4.911,0,0,1-4.9-4.9A4.912,4.912,0,0,1-87.758,56.648Z" transform="translate(98.333 -55.234)"></path><path b-q6dmfutj60="" id="Caminho_14" data-name="Caminho 14" d="M-95.865,72.415a5.241,5.241,0,0,1,5.236-5.236h7.851a5.241,5.241,0,0,1,5.236,5.236V73.57h1.414V72.415a6.651,6.651,0,0,0-6.65-6.651h-7.851a6.651,6.651,0,0,0-6.65,6.651V73.57h1.414Z" transform="translate(97.279 -51.768)"></path></svg>
+                </span>
+                <input asp-for="DadosUsuario.UserName" type="text" class="form-control ag-field-input ag-input-color-orange-full" autocomplete="off" required>
+                <label class="form-label ag-field-label">Usuario*</label>
+            </div>
+
+            <div class="form-outline mb-5 ag-field-content col-lg-4 pnl-input-user">
+
+                <span class="icon-user">
+                    <img src="~/imgs/cadeado-icon.svg" style="width: 21.7px;" />
+                </span>
+                <input asp-for="DadosUsuario.Senha" type="password" class="form-control ag-field-input ag-input-color-orange-full" autocomplete="off" required>
+                <label class="form-label ag-field-label">Senha*</label>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <button class="btn btn-outline-highlight" type="submit">Cadastrar</button>
+
+        </div>
+    </form>
+
+
+</div>

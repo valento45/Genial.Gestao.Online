@@ -5,11 +5,17 @@
     ViewData["Title"] = "Home Page";
     Layout = "_LayoutSimples";
 }
+@section Styles{
+    <link rel="stylesheet" href="~/css/login/login.css" />
+}
+
 <div class="login-page col-12">
     <div class="d-flex">
         <div class="col-8 description-home">
-            <img src="~/assets/imgs/flier.png" />
-            <p> Conecte-se com seus amigos, siga celebridades e compartilhe seus momentos!</p>
+            <img class="logo_genial" src="~/imgs/genial_logo.png" />
+
+            <p> Gerencie seu estoque e suas vendas com nosso PDV, e tenha um controle eficaz do negócio com gráficos e relatórios modernizados!</p>
+
         </div>
         <div class="col-4 form-home">
 
@@ -52,7 +58,7 @@
                     <button type="submit" class="btn btn-outline-highlight">Entrar</button>
                 </div>
                 <div class="text-center">
-                    <small class="text-white"> Não possuí cadastro? <a href="#" class="links">cadastre-se</a></small>
+                    <small class="text-white"> Não possuí cadastro? <a asp-controller="Usuario" asp-action="Cadastro" class="links">cadastre-se</a></small>
                 </div>
             </form>
         </div>

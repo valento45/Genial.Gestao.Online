@@ -30,20 +30,25 @@ namespace Genial.Gestao.Online.Domain.Authorization
 
         public async Task<IdentityResult> CreateAsync(Usuario user, CancellationToken cancellationToken)
         {
-            var inserted = await _connection.ExecuteAsync("insert into usuario_tb (nome, normalizedNome, senha, " +
-                " endereco, numero, cidade, cep, celular, email)" +
-                " values (@nome, @normalizedNome, @senha,  @endereco, @numero, @cidade, @cep, @celular, @email)",
+            var inserted = await _connection.ExecuteAsync("insert into usuario_tb (Nome, UserName, Senha, Email, EmailConfirmed, Tipo, Celular, CelularConfirmed, TwoFactorEnabled, CEP, Logradouro, Numero, Cidade, UF, Complemento) VALUES (" +
+                "@Nome, @UserName, @Senha, @Email, @EmailConfirmed, @Tipo, @Celular, @CelularConfirmed, @TwoFactorEnabled, @CEP, @Logradouro, @Numero, @Cidade, @UF, @Complemento)",
                 new
                 {
-                    //nome = user.Pessoa.Nome,
-                    //normalizedNome = user.Pessoa.Nome.ToUpper(),
-                    email = user.Email,
-                    senha = user.Senha,
-                    //endereco = user.Pessoa.Logradouro,
-                    //numero = user.Pessoa.Numero,
-                    //cidade = user.Pessoa.Cidade,
-                    //cep = user.Pessoa.CEP,
-                    celular = user.Celular
+                    Nome = user.Nome,
+                    UserName = user.UserName,
+                    Senha = user.Senha,
+                    Email = user.Email,
+                    EmailConfirmed = user.EmailConfirmed,
+                    Tipo = (int)user.Tipo,
+                    Celular = user.Celular,
+                    CelularConfirmed = user.CelularConfirmed,
+                    TwoFactorEnabled = user.TwoFactorEnabled,
+                    CEP = user.CEP,
+                    Logradouro = user.Logradouro,
+                    Numero = user.Numero,
+                    Cidade = user.Cidade,
+                    UF = user.UF,
+                    Complemento = user.Complemento
                 });
 
             if (inserted > 0)
@@ -149,18 +154,29 @@ namespace Genial.Gestao.Online.Domain.Authorization
         {
             var identityResult = new IdentityResult();
 
-
-            string query = "UPDATE usuario_tb set Email = @Email, Senha = @Senha, AutenticaDoisFatores = @AutenticaDoisFatores," +
-                " Celular = @Celular, Verificado = @Verificado WHERE IdUsuario = @IdUsuario";
+            string query = "UPDATE usuario_tb Nome = @Nome, Senha = @Senha, Email = @Email, EmailConfirmed = @EmailConfirmed, " +
+                "Tipo = @Tipo, Celular = @Celular, CelularConfirmed = @CelularConfirmed, TwoFactorEnabled = @TwoFactorEnabled, " +
+                "CEP = @CEP, Logradouro = @Logradouro, Numero = @Numero, Cidade = @Cidade, UF = @UF, Complemento = @Complemento" +
+                " WHERE IdUsuario = @IdUsuario";
 
             var result = await _connection.ExecuteAsync(query, new
             {
-                Email = user.Email,
+                IdUsuario = user.IdUsuario,
+                Nome = user.Nome,
+                UserName = user.UserName,
                 Senha = user.Senha,
-                AutenticaDoisFatores = user.TwoFactorEnabled,
+                Email = user.Email,
+                EmailConfirmed = user.EmailConfirmed,
+                Tipo = (int)user.Tipo,
                 Celular = user.Celular,
-                Verificado = user.EmailVerificado,
-                IdUsuario = user.IdUsuario               
+                CelularConfirmed = user.CelularConfirmed,
+                TwoFactorEnabled = user.TwoFactorEnabled,
+                CEP = user.CEP,
+                Logradouro = user.Logradouro,
+                Numero = user.Numero,
+                Cidade = user.Cidade,
+                UF = user.UF,
+                Complemento = user.Complemento
             });
 
             if (result > 0)

@@ -15,4 +15,8 @@
     <ProjectReference Include="..\Genial.Gestao.Online.Securitys\Genial.Gestao.Online.Securitys.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Requets\" />
+  </ItemGroup>
+
 </Project>

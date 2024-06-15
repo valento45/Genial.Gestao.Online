@@ -1,0 +1,16 @@
+Paleta de cores
+
+Topo Header
+	#242526
+
+Fundo do feed
+	#18191A 
+
+Background inputs
+	#3A3B3C
+
+Font-color
+	#DFE1E6
+
+Font-contraste:
+	#14FFEC

@@ -1,4 +1,13 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿$(document).ready(function () {
 
-// Write your JavaScript code.
+    applyMascaras();
+
+});
+
+
+function applyMascaras() {
+    $(".celular").mask('(00) 00000-0000');
+    $(".cpf").mask('000.000.000-00');
+    $(".phone").mask('(00) 0000-0000');
+
+}
