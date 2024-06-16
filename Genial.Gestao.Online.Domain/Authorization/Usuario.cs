@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Genial.Gestao.Online.Domain.Bases;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -26,7 +27,7 @@ namespace Genial.Gestao.Online.Domain.Authorization
         public bool CelularConfirmed { get; set; }
         public string CEP { get; set; }
         public string Logradouro { get; set; }
-        public string Numero { get; set; }
+        public int Numero { get; set; }
         public string Cidade { get; set; }
         public string UF { get; set; }
         public string Complemento { get; set; }

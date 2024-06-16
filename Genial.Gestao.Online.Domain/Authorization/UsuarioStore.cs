@@ -30,13 +30,13 @@ namespace Genial.Gestao.Online.Domain.Authorization
 
         public async Task<IdentityResult> CreateAsync(Usuario user, CancellationToken cancellationToken)
         {
-            var inserted = await _connection.ExecuteAsync("insert into usuario_tb (Nome, UserName, Senha, Email, EmailConfirmed, Tipo, Celular, CelularConfirmed, TwoFactorEnabled, CEP, Logradouro, Numero, Cidade, UF, Complemento) VALUES (" +
+            var inserted = await _connection.ExecuteAsync("insert into sys.usuario_tb (Nome, UserName, Senha, Email, EmailConfirmed, Tipo, Celular, CelularConfirmed, TwoFactorEnabled, CEP, Logradouro, Numero, Cidade, UF, Complemento) VALUES (" +
                 "@Nome, @UserName, @Senha, @Email, @EmailConfirmed, @Tipo, @Celular, @CelularConfirmed, @TwoFactorEnabled, @CEP, @Logradouro, @Numero, @Cidade, @UF, @Complemento)",
                 new
                 {
                     Nome = user.Nome,
                     UserName = user.UserName,
-                    Senha = user.Senha,
+                    Senha = Security.Encrypt(user.Senha),
                     Email = user.Email,
                     EmailConfirmed = user.EmailConfirmed,
                     Tipo = (int)user.Tipo,
@@ -62,7 +62,7 @@ namespace Genial.Gestao.Online.Domain.Authorization
         {
             var identityResult = new IdentityResult();
 
-            string query = "delete from usuario_tb where IdUsuario = " + user.IdUsuario;
+            string query = "delete from sys.usuario_tb where IdUsuario = " + user.IdUsuario;
             var success = await _connection.ExecuteAsync(query);
 
             if (!(success > 0))
@@ -80,13 +80,13 @@ namespace Genial.Gestao.Online.Domain.Authorization
 
         public async Task<Usuario?> FindByIdAsync(string userId, CancellationToken cancellationToken)
         {
-            string query = "select * from usuario_tb WHERE IdUsuario = " + userId;
+            string query = "select * from sys.usuario_tb WHERE IdUsuario = " + userId;
             return await _connection.QueryFirstAsync<Usuario>(query);
         }
 
         public async Task<Usuario?> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
         {
-            string query = $"select * from usuario_tb WHERE UPPER(Email) = '{normalizedUserName}'";
+            string query = $"select * from sys.usuario_tb WHERE UPPER(UserName) = '{normalizedUserName}'";
             return await _connection.QueryFirstAsync<Usuario>(query);
         }
 
@@ -154,7 +154,7 @@ namespace Genial.Gestao.Online.Domain.Authorization
         {
             var identityResult = new IdentityResult();
 
-            string query = "UPDATE usuario_tb Nome = @Nome, Senha = @Senha, Email = @Email, EmailConfirmed = @EmailConfirmed, " +
+            string query = "UPDATE sys.usuario_tb Nome = @Nome, Senha = @Senha, Email = @Email, EmailConfirmed = @EmailConfirmed, " +
                 "Tipo = @Tipo, Celular = @Celular, CelularConfirmed = @CelularConfirmed, TwoFactorEnabled = @TwoFactorEnabled, " +
                 "CEP = @CEP, Logradouro = @Logradouro, Numero = @Numero, Cidade = @Cidade, UF = @UF, Complemento = @Complemento" +
                 " WHERE IdUsuario = @IdUsuario";
@@ -164,7 +164,7 @@ namespace Genial.Gestao.Online.Domain.Authorization
                 IdUsuario = user.IdUsuario,
                 Nome = user.Nome,
                 UserName = user.UserName,
-                Senha = user.Senha,
+                Senha = Security.Encrypt(user.Senha),
                 Email = user.Email,
                 EmailConfirmed = user.EmailConfirmed,
                 Tipo = (int)user.Tipo,

@@ -1,6 +1,7 @@
 ﻿using Genial.Gestao.Online.Domain.Authorization;
 using Genial.Gestao.Online.Domain.Bases;
 using Genial.Gestao.Online.Repository.Interfaces;
+using Genial.Gestao.Online.Securitys;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -23,7 +24,7 @@ namespace Genial.Gestao.Online.Repository
         {
             OperationResult result;
 
-            string query = "UPDATE usuario_tb Nome = @Nome, Senha = @Senha, Email = @Email, EmailConfirmed = @EmailConfirmed, " +
+            string query = "UPDATE sys.usuario_tb Nome = @Nome, Senha = @Senha, Email = @Email, EmailConfirmed = @EmailConfirmed, " +
                 "Tipo = @Tipo, Celular = @Celular, CelularConfirmed = @CelularConfirmed, TwoFactorEnabled = @TwoFactorEnabled, " +
                 "CEP = @CEP, Logradouro = @Logradouro, Numero = @Numero, Cidade = @Cidade, UF = @UF, Complemento = @Complemento" +
                 " WHERE IdUsuario = @IdUsuario";
@@ -33,7 +34,7 @@ namespace Genial.Gestao.Online.Repository
                 IdUsuario = usuario.IdUsuario,
                 Nome = usuario.Nome,
                 UserName = usuario.UserName,
-                Senha = usuario.Senha,
+                Senha = Security.Encrypt(usuario.Senha),
                 Email = usuario.Email,
                 EmailConfirmed = usuario.EmailConfirmed,
                 Tipo = (int)usuario.Tipo,
@@ -66,13 +67,13 @@ namespace Genial.Gestao.Online.Repository
         {
             OperationResult result;
 
-            var inserted = await base.ExecuteAsync("insert into usuario_tb (Nome, UserName, Senha, Email, EmailConfirmed, Tipo, Celular, CelularConfirmed, TwoFactorEnabled, CEP, Logradouro, Numero, Cidade, UF, Complemento) VALUES (" +
+            var inserted = await base.ExecuteAsync("insert into sys.usuario_tb (Nome, UserName, Senha, Email, EmailConfirmed, Tipo, Celular, CelularConfirmed, TwoFactorEnabled, CEP, Logradouro, Numero, Cidade, UF, Complemento) VALUES (" +
               "@Nome, @UserName, @Senha, @Email, @EmailConfirmed, @Tipo, @Celular, @CelularConfirmed, @TwoFactorEnabled, @CEP, @Logradouro, @Numero, @Cidade, @UF, @Complemento)",
               new
               {
                   Nome = usuario.Nome,
                   UserName = usuario.UserName,
-                  Senha = usuario.Senha,
+                  Senha = Security.Encrypt(usuario.Senha),
                   Email = usuario.Email,
                   EmailConfirmed = usuario.EmailConfirmed,
                   Tipo = (int)usuario.Tipo,
@@ -95,29 +96,39 @@ namespace Genial.Gestao.Online.Repository
             return result;
         }
 
-        public Task<Usuario> ObterByEmail(string email)
+        public async Task<IEnumerable<Usuario>> ObterByEmail(string email)
         {
-            throw new NotImplementedException();
+            string query = $"select * from sys.usuario_tb where UPPER(Email) like '%{email.ToUpper()}%'";
+
+            return await base.QueryAsync<Usuario>(query);
         }
 
-        public Task<Usuario> ObterById(int idUsuario)
+        public async Task<Usuario> ObterById(int idUsuario)
         {
-            throw new NotImplementedException();
+            string query = $"select * from sys.usuario_tb where IdUsuario = {idUsuario}";
+
+            return await base.QueryFirsAsync<Usuario>(query);
         }
 
-        public Task<IEnumerable<Usuario>> ObterByNome(string nome)
+        public async Task<IEnumerable<Usuario>> ObterByNome(string nome)
         {
-            throw new NotImplementedException();
+            string query = $"select * from sys.usuario_tb where UPPER(Nome) like '%{nome.ToUpper()}%'";
+
+            return await base.QueryAsync<Usuario>(query);
         }
 
-        public Task<IEnumerable<Usuario>> ObterByUserName(string userName)
+        public async Task<Usuario> ObterByUserName(string userName)
         {
-            throw new NotImplementedException();
+            string query = $"select * from sys.usuario_tb where UPPER(UserName) like '%{userName.ToUpper()}%'";
+
+            return await base.QueryFirsAsync<Usuario>(query);
         }
 
-        public Task<IEnumerable<Usuario>> ObterTodos()
+        public async Task<IEnumerable<Usuario>> ObterTodos()
         {
-            throw new NotImplementedException();
+            string query = $"select * from sys.usuario_tb ";
+
+            return await base.QueryAsync<Usuario>(query);
         }
     }
 }

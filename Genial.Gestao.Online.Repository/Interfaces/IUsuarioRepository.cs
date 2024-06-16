@@ -16,8 +16,8 @@ namespace Genial.Gestao.Online.Repository.Interfaces
         Task<OperationResult> Excluir(int idUsuario);
         Task<IEnumerable<Usuario>> ObterTodos();
         Task<Usuario> ObterById(int idUsuario);
-        Task<Usuario> ObterByEmail(string email);
-        Task<IEnumerable<Usuario>> ObterByUserName(string userName);
+        Task<IEnumerable<Usuario>> ObterByEmail(string email);
+        Task<Usuario> ObterByUserName(string userName);
         Task<IEnumerable<Usuario>> ObterByNome(string nome);
     }
 }

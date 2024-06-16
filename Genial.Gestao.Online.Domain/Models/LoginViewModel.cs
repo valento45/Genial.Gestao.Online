@@ -10,6 +10,7 @@ namespace Genial.Gestao.Online.Domain.Models
     public class LoginViewModel
     {
         public string Email { get; set; }
+        public string UserName { get; set; }
         public string Senha { get; set; }
         public string PasswordHash
         {
@@ -20,7 +21,7 @@ namespace Genial.Gestao.Online.Domain.Models
         }
         public string Message { get; set; }
 
-        public bool LembrarMe { get; set; }
+        public bool LembrarMe { get; set; } = false;
 
         public LoginViewModel()
         {

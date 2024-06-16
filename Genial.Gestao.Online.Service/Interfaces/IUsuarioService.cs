@@ -14,5 +14,9 @@ namespace Genial.Gestao.Online.Service.Interfaces
         Task<CadastroUsuarioViewModel> Incluir(Usuario model);
         Task<CadastroUsuarioViewModel> Atualizar(Usuario model);
         Task<OperationResult> Excluir(int idUsuario);
+        Task<Usuario> ObterById(int idUsuario);
+        Task<Usuario> ObterByUserName(string userName);
+        Task<IEnumerable<Usuario>> ObterTodos();
+
     }
 }

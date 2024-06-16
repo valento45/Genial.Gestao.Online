@@ -12,14 +12,14 @@
 
     <form class="col-lg-12 mt-5" asp-controller="Usuario" asp-action="Cadastrar" method="post" enctype="multipart/form-data">
 
-        @if (!Model.OperationSucess)
+        @if (!Model?.OperationSucess ?? false)
         {
             <div class="col-lg-12 p-2" style="background-color: beige; text-align-last: center;">
                 <h4 class="text-warning mt-3">@Model?.Message</h4>
             </div>
         }
 
-        <div class="col-lg-12">
+        <div class="col-lg-12 mt-5">
             <input asp-for="DadosUsuario.IdUsuario" type="hidden" />
 
             <div class="form-outline mb-5 ag-field-content col-lg-7">
@@ -28,7 +28,7 @@
             </div>
 
             <div class="form-outline mb-5 ag-field-content col-lg-7">
-                <input asp-for="DadosUsuario.Email" type="text" class="form-control ag-field-input ag-input-color-orange-full" autocomplete="off">
+                <input asp-for="DadosUsuario.Email" type="text" class="form-control ag-field-input ag-input-color-orange-full" autocomplete="off" required>
                 <label class="form-label ag-field-label">Email</label>
             </div>
 

@@ -17,25 +17,41 @@ namespace Genial.Gestao.Online.WebApp.Controllers
         [HttpGet]
         public IActionResult Cadastro()
         {
-
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Cadastrar(CadastroUsuarioViewModel cadastroUsuarioViewModel)
         {
-            CadastroUsuarioViewModel result;
 
-            if (cadastroUsuarioViewModel.DadosUsuario?.IdUsuario > 0)
-                result = await _usuarioService.Atualizar(cadastroUsuarioViewModel.DadosUsuario);
-            else          
-                result = await _usuarioService.Incluir(cadastroUsuarioViewModel?.DadosUsuario);
-            
+            if (cadastroUsuarioViewModel.IsValido())
+            {
+                CadastroUsuarioViewModel result;
+                var user = await _usuarioService.ObterByUserName(cadastroUsuarioViewModel.DadosUsuario?.UserName);
 
-            if (result.OperationSucess)
-                return View("SucessoMessage");
+                if (user == null)
+                {
+                    result = await _usuarioService.Incluir(cadastroUsuarioViewModel?.DadosUsuario);
+
+
+                    if (result.OperationSucess)
+                        return View("SucessoMessage");
+                    else
+                        return View(nameof(Cadastro), result);
+                }
+                else
+                {
+                    cadastroUsuarioViewModel.Message = $"Usuário '{cadastroUsuarioViewModel.DadosUsuario.UserName}'" +
+                        $" Já existe um usuário, por favor escolha outro.";
+                    return View(nameof(Cadastro), cadastroUsuarioViewModel);
+                }
+
+            }
             else
-                return View(nameof(Cadastro), result);
+            {
+                cadastroUsuarioViewModel.Message = "Preencha todos os campos obrigatórios para prosseguir";
+                return View(nameof(Cadastro), cadastroUsuarioViewModel);
+            }
         }
     }
 }

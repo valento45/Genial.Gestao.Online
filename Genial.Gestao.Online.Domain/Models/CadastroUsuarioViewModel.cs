@@ -20,5 +20,11 @@ namespace Genial.Gestao.Online.Domain.Models
         {
             DadosUsuario = new Usuario();
         }
+
+        public bool IsValido()
+        {
+            return DadosUsuario != null && !string.IsNullOrEmpty(DadosUsuario.UserName) && !string.IsNullOrEmpty(DadosUsuario.Senha)
+                && !string.IsNullOrEmpty(DadosUsuario.Celular);
+        }
     }
 }

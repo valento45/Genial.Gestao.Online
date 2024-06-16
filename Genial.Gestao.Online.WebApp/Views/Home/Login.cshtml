@@ -21,6 +21,8 @@
 
             <form asp-asp-controller="Home" asp-action="Logar" method="post">
 
+
+
                 @if (!string.IsNullOrEmpty(Model?.Message))
                 {
                     <div class="center-text container ">
@@ -35,13 +37,13 @@
                 </div>
 
                 <div class="form-outline mb-5 ag-field-content ">
-                    <input asp-for="Email" type="text" id="email-form" class="form-control ag-field-input ag-input-color-orange-full" autocomplete="off" required />
-                    <label class="form-label ag-field-label" for="email-form">Email</label>
+                    <input asp-for="UserName" type="text" id="email-form" class="form-control ag-field-input ag-input-color-orange-full" autocomplete="off" required />
+                    <label class="form-label ag-field-label" for="email-form">Usuário</label>
                 </div>
 
                 <div class="form-outline ag-field-content">
                     <input asp-for="Senha" type="password" class="form-control ag-field-input" id="password" required>
-                    <label for="password" class="form-label ag-field-label">Password</label>
+                    <label for="password" class="form-label ag-field-label">Senha</label>
 
                 </div>
 
@@ -49,7 +51,7 @@
                     <!-- Checkbox -->
                     <div class="form-check">
                         <label class="form-check-label" for="chkLembrarMe"> Lembrar-me </label>
-                        <input asp-for="LembrarMe" class="form-check-input form-checkbox-input" type="checkbox" value="" checked="">
+                        <input asp-for="LembrarMe" class="form-check-input form-checkbox-input" type="checkbox" id="chkLembrarMe">
 
                     </div>
                 </div>

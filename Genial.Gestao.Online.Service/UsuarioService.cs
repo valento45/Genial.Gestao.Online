@@ -46,11 +46,24 @@ namespace Genial.Gestao.Online.Service
             return result;
         }
 
-        public Task<OperationResult> Excluir(int idUsuario)
+        public async Task<OperationResult> Excluir(int idUsuario)
         {
-            throw new NotImplementedException();
+            return await _usuarioRepository.Excluir(idUsuario);
         }
 
+        public async Task<Usuario> ObterById(int idUsuario)
+        {
+            return await _usuarioRepository.ObterById(idUsuario);
+        }
 
+        public async Task<Usuario> ObterByUserName(string userName)
+        {
+            return await _usuarioRepository.ObterByUserName(userName);
+        }
+
+        public async Task<IEnumerable<Usuario>> ObterTodos()
+        {
+            return await _usuarioRepository.ObterTodos();
+        }
     }
 }

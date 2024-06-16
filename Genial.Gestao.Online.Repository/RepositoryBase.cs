@@ -123,6 +123,21 @@ namespace Genial.Gestao.Online.Repository
 
         }
 
+        protected async Task<T> QueryFirsAsync<T>(string query, object param = null) where T : class
+        {
+            try
+            {
+                return await _dbConnection.QueryFirstAsync<T>(query, param);
+            }
+            catch (Exception ex)
+            {
+                await Console.Out.WriteLineAsync(ex.Message);
+                Message = ex.Message;
+                OperationSuccess = false;
+                return null;
+            }
+        }
+
         protected async Task<IEnumerable<int>> QueryAsync(string query, object param)
         {
             try
